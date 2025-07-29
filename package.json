@@ -1,0 +1,26 @@
+{
+  "name": "task-1",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "tailwindcss -i ./public/input.css -o ./public/output.css --watch & node server.js",
+    "build": "tailwindcss -i ./public/input.css -o ./public/output.css --minify",
+    "start": "node api/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.11",
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.2.1",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "mongodb": "^6.18.0",
+    "mongoose": "^8.16.5",
+    "tailwindcss": "^4.1.11"
+  }
+}
