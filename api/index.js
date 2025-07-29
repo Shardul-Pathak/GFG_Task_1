@@ -65,7 +65,7 @@ app.post('/login', async (req, res) => {
 
 app.post('/api/send', async (req, res) => {
   const userMessage = req.body.userMessage;
-  const chatBotApi = 'https://r-chatbot-8oxf.vercel.app/chatbot';
+  const chatBotApi = process.env.CHATBOT_API_KEY;
   const response = await fetch(chatBotApi, {
     method: 'POST',
     headers: {
