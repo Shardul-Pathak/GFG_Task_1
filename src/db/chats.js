@@ -14,7 +14,7 @@ const connectChat = async () => {
     }
 };
 
-const productSchema = new mongoose.Schema({
+const chatSchema = new mongoose.Schema({
     userMessage: {
         type: String, required: true
     },
@@ -26,6 +26,6 @@ const productSchema = new mongoose.Schema({
     }
 });
 
-const chatCollection=new mongoose.model("Chats", productSchema);
+const chatCollection=new mongoose.model("Chats", chatSchema);
 
 export { connectChat, chatCollection };
