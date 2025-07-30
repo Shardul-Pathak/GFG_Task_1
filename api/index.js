@@ -5,6 +5,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { connectDB, collection } from '../src/db/db.js';
 import { connectChat, chatCollection } from '../src/db/chats.js';
+import { connectTitle, titleCollection } from '../src/db/titles.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import bcrypt from 'bcrypt';
@@ -14,6 +15,7 @@ const __dirname = path.dirname(__filename);
 
 connectDB();
 connectChat();
+connectTitle();
 
 const app = express();
 const PORT = process.env.PORT;
@@ -25,6 +27,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 import pageRoutes from '../src/routes/pages.js';
+import { title } from 'process';
 
 app.post('/signup', async (req, res) => {
   const data = {
@@ -63,6 +66,19 @@ app.post('/login', async (req, res) => {
   }
 });
 
+app.post('/title', async (req, res) => {
+  const title = req.body.title;
+  const existingTitle = await titleCollection.findOne({ title: title });
+  if (existingTitle) {
+    return res.send('Title already exists');
+  }
+  const titleData = {
+    title: title,
+  }
+  await titleCollection.insertMany(titleData);
+  res.redirect('/chatApp');
+});
+
 app.post('/api/send', async (req, res) => {
   const userMessage = req.body.userMessage;
   const chatBotApi = process.env.CHATBOT_API_KEY;
@@ -75,6 +91,7 @@ app.post('/api/send', async (req, res) => {
   });
   const chatBotResponse = await response.json();
   chatCollection.insertMany({
+    title: req.body.title,
     userMessage: userMessage,
     botMessage: `${chatBotResponse.response}`,
     timestamp: new Date()
@@ -86,6 +103,13 @@ app.get('/api/responses', async (req, res) => {
   const chats = await chatCollection.find({});
   if(chats.length != 0) {
     res.json(chats);
+  }
+});
+
+app.get('/api/previousChats', async (req, res) => {
+  const titles = await titleCollection.find({});
+  if(titles.length != 0) {
+    res.json(titles);
   }
 });
 

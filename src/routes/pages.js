@@ -21,6 +21,10 @@ router.get('/chatApp', (req, res) => {
   res.render('chatApp');
 });
 
+router.get('/title', (req, res) => {
+  res.render('title');
+});
+
 export default router;
 
 
