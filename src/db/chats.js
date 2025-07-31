@@ -15,6 +15,9 @@ const connectChat = async () => {
 };
 
 const chatSchema = new mongoose.Schema({
+    title: {
+        type: String, required: true
+    },
     userMessage: {
         type: String, required: true
     },
