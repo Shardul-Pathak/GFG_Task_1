@@ -35,7 +35,6 @@ app.post('/signup', async (req, res) => {
     email: req.body.email,
     password: req.body.password,
   }
-  console.log(data.password);
   const existingMail = await collection.findOne({ email: data.email });
   if (existingMail) {
     res.redirect('/login');
